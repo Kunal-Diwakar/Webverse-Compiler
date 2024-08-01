@@ -1,36 +1,51 @@
 // import React from "react";
 import "./PagesStyles/grid.css";
-import { z } from "zod"; 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from "react-router-dom";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/Shadecn/components/ui/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/Shadecn/components/ui/form";
 import { Button } from "@/Shadecn/components/ui/button";
 import { handleError } from "@/utils/handleError";
 import { useForm } from "react-hook-form";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Input } from "@/Shadecn/components/ui/input";
+import { useLoginMutation } from "@/Redux/slices/api";
+import { updateCurrentUser, updateIsLoggedIn } from "@/Redux/slices/appSlice";
 
 const formSchema = z.object({
-    userId: z.string(),
-    password: z.string(),
+  userId: z.string(),
+  password: z.string(),
 });
 
 export default function Login() {
-    const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        userId: "",
-        password: "",
-      },
-    });
-  
-    async function handleLogin(values: z.infer<typeof formSchema>) {
-      try {
-        console.log(values);
-      } catch (error) {
-        handleError(error);
-      }
+  const [login, { isLoading }] = useLoginMutation();
+  const Dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      userId: "",
+      password: "",
+    },
+  });
+
+  async function handleLogin(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await login(values).unwrap();
+      Dispatch(updateCurrentUser(response));
+      Dispatch(updateIsLoggedIn(true));
+      navigate("/");
+    } catch (error) {
+      handleError(error);
     }
+  }
 
   return (
     <div className="__login grid-bg w-full h-[calc(100dvh-60px)] flex justify-center items-center flex-col gap-3">
@@ -51,7 +66,7 @@ export default function Login() {
                   <FormControl>
                     <Input
                       required
-                      // disabled={isLoading}
+                      disabled={isLoading}
                       placeholder="Username or Email"
                       {...field}
                     />
@@ -68,7 +83,7 @@ export default function Login() {
                   <FormControl>
                     <Input
                       required
-                      // disabled={isLoading}
+                      disabled={isLoading}
                       type="password"
                       placeholder="Password"
                       {...field}
@@ -78,7 +93,7 @@ export default function Login() {
                 </FormItem>
               )}
             />
-            <Button className="w-full" type="submit">
+            <Button loading={isLoading} className="w-full" type="submit">
               Login
             </Button>
           </form>
