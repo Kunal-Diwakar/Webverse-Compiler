@@ -1,6 +1,8 @@
+import { useLoadcodeMutation } from "@/Redux/slices/api";
 import { updateFullCode } from "@/Redux/slices/CompilerSlice";
 import CodeEditor from "@/Shadecn/components/CodeEditor";
 import HelperHeader from "@/Shadecn/components/HelperHeader";
+import Loader from "@/Shadecn/components/Loader/Loader";
 import RenderCode from "@/Shadecn/components/RenderCode";
 import {
   ResizableHandle,
@@ -8,28 +10,22 @@ import {
   ResizablePanelGroup,
 } from "@/Shadecn/components/ui/resizable";
 import { handleError } from "@/utils/handleError";
-import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { toast } from "sonner";
 
 export default function Compiler() {
   const { urlId } = useParams();
+  const [loadExistingCode, { isLoading }] = useLoadcodeMutation();
   const Dispatch = useDispatch();
 
   const loadCode = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/compiler/load", {
-        urlId: urlId,
-      });
-      Dispatch(updateFullCode(response.data.fullCode));
-    } catch (error) {
-      if(axios.isAxiosError(error)) {
-        if(error?.response?.status === 500) {
-          toast("Invalid URL, Defult Page Loaded !")
-        }
+      if (urlId) {
+        const response = await loadExistingCode({ urlId }).unwrap();
+        Dispatch(updateFullCode(response.fullCode));
       }
+    } catch (error) {
       handleError(error);
     }
   };
@@ -39,6 +35,13 @@ export default function Compiler() {
       loadCode();
     }
   }, [urlId]);
+
+  if (isLoading)
+    return (
+      <div className="w-full h-[calc(100dvh-60px)] flex justify-center items-center">
+        <Loader />
+      </div>
+    );
 
   return (
     <ResizablePanelGroup direction="horizontal" className="">
