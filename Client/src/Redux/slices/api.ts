@@ -44,7 +44,17 @@ export const api = createApi({
         };
       },
     }),
+
+    logout : builder.mutation<void,void>({
+      query: () => {
+        return {
+          url: "user/logout",
+          method: "POST",
+          credentials: "include",
+        }
+      }
+    })
   }),
 });
 
-export const { useSaveCodeMutation, useLoadcodeMutation, useLoginMutation } = api;
+export const { useSaveCodeMutation, useLoadcodeMutation, useLoginMutation, useLogoutMutation } = api;
