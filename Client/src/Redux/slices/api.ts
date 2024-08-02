@@ -45,16 +45,32 @@ export const api = createApi({
       },
     }),
 
-    logout : builder.mutation<void,void>({
+    logout: builder.mutation<void, void>({
       query: () => {
         return {
           url: "user/logout",
           method: "POST",
           credentials: "include",
-        }
-      }
-    })
+        };
+      },
+    }),
+
+    getUserDetails: builder.query<userInfoType, void>({
+      query: () => {
+        return {
+          url: "/user/user-details",
+          method: "GET",
+          cache: "no-store"
+        };
+      },
+    }),
   }),
 });
 
-export const { useSaveCodeMutation, useLoadcodeMutation, useLoginMutation, useLogoutMutation } = api;
+export const {
+  useSaveCodeMutation,
+  useLoadcodeMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useGetUserDetailsQuery,
+} = api;

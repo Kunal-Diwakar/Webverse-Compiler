@@ -4,9 +4,11 @@ import { config } from "dotenv";
 import { dbConnect } from "./lib/dbConnect";
 import { userRouter } from "./routes/userRoutes";
 import { compilerRouter } from "./routes/compilerRoutes";
+import cookieParser from "cookie-parser"
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     credentials: true,

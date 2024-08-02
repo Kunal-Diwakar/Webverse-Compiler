@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Shadecn/components/Header";
 import Home from "./Pages/Home";
@@ -7,7 +8,23 @@ import { ThemeProvider } from "./Shadecn/components/theme-provider";
 import { Toaster } from "./Shadecn/components/ui/sonner";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import { useGetUserDetailsQuery } from "./Redux/slices/api";
+import { useDispatch } from "react-redux";
+import { updateCurrentUser, updateIsLoggedIn } from "./Redux/slices/appSlice";
 function App() {
+  const { data, error } = useGetUserDetailsQuery();
+  const Diapatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      Diapatch(updateCurrentUser(data));
+      Diapatch(updateIsLoggedIn(true));
+    } else if (error) {
+      Diapatch(updateCurrentUser({}));
+      Diapatch(updateIsLoggedIn(false));
+    }
+  }, [data, error]);
+
   return (
     <>
       <Toaster position="bottom-right" theme="dark" />
