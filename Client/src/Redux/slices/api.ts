@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CompilerSliceStateType } from "./CompilerSlice";
-import { loginCredentialsType, userInfoType } from "@/vite-env";
+import { loginCredentialsType, signupCredentialsType, userInfoType } from "@/vite-env";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -45,6 +45,14 @@ export const api = createApi({
       },
     }),
 
+    signup: builder.mutation<userInfoType, signupCredentialsType>({
+      query: (body) => ({
+        url: "/user/signup",
+        method: "POST",
+        body: body,
+      }),
+    }),
+
     logout: builder.mutation<void, void>({
       query: () => {
         return {
@@ -72,5 +80,6 @@ export const {
   useLoadcodeMutation,
   useLoginMutation,
   useLogoutMutation,
+  useSignupMutation,
   useGetUserDetailsQuery,
 } = api;

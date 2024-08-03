@@ -23,7 +23,7 @@ function App() {
       Diapatch(updateCurrentUser({}));
       Diapatch(updateIsLoggedIn(false));
     }
-  }, [data, error]);
+  }, [Diapatch, data, error]);
 
   return (
     <>

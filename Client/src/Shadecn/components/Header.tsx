@@ -16,7 +16,7 @@ function Header() {
   );
 
   const currentUser = useSelector(
-    (state:RootState) => state.appSlice.currentUser
+    (state: RootState) => state.appSlice.currentUser
   );
 
   async function handleLogout() {
@@ -34,6 +34,11 @@ function Header() {
         <h2 className="font-bold text-2xl select-none">WebVerse</h2>
       </Link>
       <ul className="flex gap-2">
+        <Link to="/compiler">
+          <h2 className="font-medium text-lg bg-gray-700 rounded-md px-3 py-1 select-none">
+            Compiler
+          </h2>
+        </Link>
         {isLoggedIn ? (
           <>
             <li>
@@ -69,12 +74,6 @@ function Header() {
             </Link>
           </>
         )}
-
-        <Link to="/compiler">
-          <h2 className="font-medium text-lg bg-gray-700 rounded-md px-3 py-1 select-none">
-            Compiler
-          </h2>
-        </Link>
       </ul>
     </nav>
   );

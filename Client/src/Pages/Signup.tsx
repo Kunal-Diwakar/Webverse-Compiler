@@ -1,8 +1,8 @@
-// import React from "react"
+import React from "react";
 import "./PagesStyles/grid.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -14,6 +14,9 @@ import { Button } from "@/Shadecn/components/ui/button";
 import { handleError } from "@/utils/handleError";
 import { useForm } from "react-hook-form";
 import { Input } from "@/Shadecn/components/ui/input";
+import { useSignupMutation } from "@/Redux/slices/api";
+import { useDispatch } from "react-redux";
+import { updateCurrentUser, updateIsLoggedIn } from "@/Redux/slices/appSlice";
 
 const formSchema = z.object({
   username: z.string(),
@@ -22,6 +25,10 @@ const formSchema = z.object({
 });
 
 export default function Signup() {
+  const [signup, { isLoading }] = useSignupMutation();
+  const Dispatch = useDispatch();
+  const Navigate = useNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,9 +38,12 @@ export default function Signup() {
     },
   });
 
-  async function handleSignup(values: z.infer<typeof formSchema>) {
+   async function handleSignup(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
+      const response = await signup(values).unwrap();
+      Dispatch(updateCurrentUser(response));
+      Dispatch(updateIsLoggedIn(true));
+      Navigate("/");
     } catch (error) {
       handleError(error);
     }
@@ -56,7 +66,7 @@ export default function Signup() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      // disabled={isLoading}
+                      disabled={isLoading}
                       placeholder="Username"
                       {...field}
                     />
@@ -72,7 +82,7 @@ export default function Signup() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      // disabled={isLoading}
+                      disabled={isLoading}
                       type="email"
                       placeholder="Email"
                       {...field}
@@ -89,7 +99,7 @@ export default function Signup() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      // disabled={isLoading}
+                      disabled={isLoading}
                       type="password"
                       placeholder="Password"
                       {...field}
