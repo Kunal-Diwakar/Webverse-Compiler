@@ -184,7 +184,7 @@ export default function HelperHeader() {
             )
           }
         >
-          <SelectTrigger className="w-[140px] focus:ring-0 bg-gray-800">
+          <SelectTrigger className="w-[140px] focus:ring-0 bg-[#1f2937c4]">
             <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent>

@@ -7,6 +7,8 @@ const Compiler = lazy(() => import("./Pages/Compiler"));
 const Login = lazy(() => import("./Pages/Login"));
 const Signup = lazy(() => import("./Pages/Signup"));
 const NotFound = lazy(() => import("./Pages/NotFound"));
+const AllCodes = lazy(() => import("./Pages/AllCodes"));
+const MyCodes = lazy(() => import("./Pages/MyCodes"));
 
 export default function AllRoutes() {
   return (
@@ -22,6 +24,8 @@ export default function AllRoutes() {
         <Route path="/compiler/:urlId?" element={<Compiler />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/all-codes" element={<AllCodes />} />
+        <Route path="/my-codes" element={<MyCodes />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

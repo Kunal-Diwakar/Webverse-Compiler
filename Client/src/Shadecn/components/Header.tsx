@@ -34,13 +34,35 @@ function Header() {
         <h2 className="font-bold text-2xl select-none">WebVerse</h2>
       </Link>
       <ul className="flex gap-2">
+        <li>
         <Link to="/compiler">
-          <h2 className="font-medium text-lg bg-gray-700 rounded-md px-3 py-1 select-none">
+          <Button variant="secondary" className="text-base">
             Compiler
-          </h2>
+          </Button>
         </Link>
+        </li>
+        <li>
+              <Link to={"./all-codes"}>
+                <Button
+                  variant="secondary"
+                  className="text-base"
+                >
+                  All Codes
+                </Button>
+              </Link>
+            </li>
         {isLoggedIn ? (
           <>
+            <li>
+              <Link to={"./my-codes"}>
+                <Button
+                  variant="secondary"
+                  className="text-base"
+                >
+                  My Codes
+                </Button>
+              </Link>
+            </li>
             <li>
               <Button
                 loading={isLoading}
