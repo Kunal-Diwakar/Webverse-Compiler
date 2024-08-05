@@ -7,7 +7,7 @@ export const api = createApi({
     baseUrl: "http://localhost:4000",
     credentials: "include",
   }),
-  tagTypes: ["myCodes"],
+  tagTypes: ["myCodes", "allCodes"],
   endpoints: (builder) => ({
     saveCode: builder.mutation<
       { url: string; status: string },
@@ -65,6 +65,38 @@ export const api = createApi({
       },
     }),
 
+    deleteCode: builder.mutation<void, string>({
+      query: (_id) => ({
+        url: `/compiler/delete/${_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["myCodes", "allCodes"],
+    }),
+
+    editCode: builder.mutation<
+      void,
+      { fullCode: CompilerSliceStateType["fullCode"]; id: string }
+    >({
+      query: ({ fullCode, id }) => {
+        return {
+          url: `/compiler/edit/${id}`,
+          method: "PUT",
+          body: fullCode,
+        };
+      },
+    }),
+
+    getAllCodes: builder.query<
+      Array<{ _id: string; title: string; ownerName: string }>,
+      void
+    >({
+      query: () => ({
+        url: "/compiler/get-all-codes",
+        cache: "no-store",
+      }),
+      providesTags: ["allCodes"],
+    }),
+
     getUserDetails: builder.query<userInfoType, void>({
       query: () => {
         return {
@@ -88,5 +120,6 @@ export const {
   useLogoutMutation,
   useSignupMutation,
   useGetUserDetailsQuery,
-  useGetMyCodesQuery
+  useGetMyCodesQuery,
+  useDeleteCodeMutation
 } = api;

@@ -77,3 +77,47 @@ export const getMyCodes = async (req: AuthRequest, res: Response) => {
     return res.status(500).send({ message: "Error loading my codes!", error });
   }
 };
+
+export const deleteCode = async (req: AuthRequest, res: Response) => {
+  const userId = req._id;
+  const {id} = req.params;
+  try {
+    const owner = await User.findById(userId);
+    if (!owner) {
+      return res.status(404).send({ message: "cannot find owner!" });
+    }
+
+    const existingCode = await Code.findById(id);
+    if (!existingCode) {
+      return res.status(404).send({ message: "Code not found" });
+    }
+    if (existingCode.ownerName !== owner.username) {
+      return res
+        .status(400)
+        .send({ message: "You don't have permission to delete this code!" });
+    }
+    
+    const deleteCode = await Code.findByIdAndDelete(id);
+    if (deleteCode) {
+      return res.status(200).send({ message: "Post Deleted successfully" });
+    } else{
+      return res.status(500).send({ message: "Code not found"});
+    }
+  } catch (error) {
+    return res.status(500).send({ message: "Error in deleting codes!", error });
+  }
+};
+
+export const editCode = async (req: AuthRequest, res: Response) => {
+  try {
+  } catch (error) {
+    return res.status(500).send({ message: "Error in deleting codes!", error });
+  }
+};
+
+export const getAllCodes = async (req: AuthRequest, res: Response) => {
+  try {
+  } catch (error) {
+    return res.status(500).send({ message: "Error in deleting codes!", error });
+  }
+};
