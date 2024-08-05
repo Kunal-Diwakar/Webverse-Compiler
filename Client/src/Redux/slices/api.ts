@@ -7,6 +7,7 @@ export const api = createApi({
     baseUrl: "http://localhost:4000",
     credentials: "include",
   }),
+  tagTypes: ["myCodes"],
   endpoints: (builder) => ({
     saveCode: builder.mutation<
       { url: string; status: string },
@@ -19,6 +20,7 @@ export const api = createApi({
           body: fullCode,
         };
       },
+      invalidatesTags: ["myCodes"],
     }),
 
     loadcode: builder.mutation<
@@ -67,14 +69,14 @@ export const api = createApi({
       query: () => {
         return {
           url: "/user/user-details",
-          method: "GET",
           cache: "no-store"
         };
       },
     }),
 
     getMyCodes: builder.query<Array<codeType>, void>({
-      query: () => "/user/my-codes"
+      query: () => "/user/my-codes",
+      providesTags: ["myCodes"]
     }),
   }),
 });

@@ -56,7 +56,7 @@ function Header() {
             <li>
               <Link to={"./my-codes"}>
                 <Button
-                  variant="secondary"
+                  variant="success"
                   className="text-base"
                 >
                   My Codes
