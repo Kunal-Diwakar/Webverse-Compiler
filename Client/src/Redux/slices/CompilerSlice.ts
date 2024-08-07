@@ -7,7 +7,8 @@ export interface CompilerSliceStateType {
     css: string;
     javascript: string;
   };
-  currentLanguage: "html" | "css" | "javascript";
+  currentLanguage: "html" | "css" | "javascript",
+  isOwner: boolean;
 }
 
 const initialstate: CompilerSliceStateType = {
@@ -159,6 +160,7 @@ li button.delete:hover {
 });`,
   },
   currentLanguage: "html",
+  isOwner: false,
 };
 
 const CompilerSlice = createSlice({
@@ -182,9 +184,13 @@ const CompilerSlice = createSlice({
     ) => {
       state.fullCode = action.payload;
     },
+
+    updateIsOwner: (state, action: PayloadAction<boolean>) => {
+      state.isOwner = action.payload;
+    },
   },
 });
 
 export default CompilerSlice.reducer;
 
-export const { updateCurrentLanguage, updateCodeValue, updateFullCode } = CompilerSlice.actions;
+export const { updateCurrentLanguage, updateCodeValue, updateFullCode, updateIsOwner } = CompilerSlice.actions;

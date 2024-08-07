@@ -1,5 +1,5 @@
 import { useLoadcodeMutation } from "@/Redux/slices/api";
-import { updateFullCode } from "@/Redux/slices/CompilerSlice";
+import { updateFullCode, updateIsOwner } from "@/Redux/slices/CompilerSlice";
 import CodeEditor from "@/Shadecn/components/CodeEditor";
 import HelperHeader from "@/Shadecn/components/HelperHeader";
 import Loader from "@/Shadecn/components/Loader/Loader";
@@ -24,6 +24,7 @@ export default function Compiler() {
       if (urlId) {
         const response = await loadExistingCode({ urlId }).unwrap();
         Dispatch(updateFullCode(response.fullCode));
+        Dispatch(updateIsOwner(response.isOwner));
       }
     } catch (error) {
       handleError(error);

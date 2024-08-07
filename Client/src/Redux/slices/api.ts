@@ -24,7 +24,7 @@ export const api = createApi({
     }),
 
     loadcode: builder.mutation<
-      { fullCode: CompilerSliceStateType["fullCode"] },
+      { fullCode: CompilerSliceStateType["fullCode"]; isOwner: boolean },
       { urlId: string }
     >({
       query: (body) => {
@@ -121,5 +121,6 @@ export const {
   useSignupMutation,
   useGetUserDetailsQuery,
   useGetMyCodesQuery,
-  useDeleteCodeMutation
+  useDeleteCodeMutation,
+  useEditCodeMutation
 } = api;
