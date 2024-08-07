@@ -122,5 +122,6 @@ export const {
   useGetUserDetailsQuery,
   useGetMyCodesQuery,
   useDeleteCodeMutation,
-  useEditCodeMutation
+  useEditCodeMutation,
+  useGetAllCodesQuery
 } = api;

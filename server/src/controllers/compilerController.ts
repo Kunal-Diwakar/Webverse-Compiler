@@ -138,8 +138,10 @@ export const editCode = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export const getAllCodes = async (req: AuthRequest, res: Response) => {
+export const getAllCodes = async (req: Request, res: Response) => {
   try {
+    const allCodes = await Code.find().sort({ createdAt: -1 });
+    return res.status(200).send(allCodes);
   } catch (error) {
     return res.status(500).send({ message: "Error in deleting codes!", error });
   }

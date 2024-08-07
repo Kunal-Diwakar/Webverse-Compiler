@@ -13,20 +13,25 @@ import {
 import { useDeleteCodeMutation } from "@/Redux/slices/api";
 import { handleError } from "@/utils/handleError";
 
-export default function CodeItem({ data, }: { data: codeType; deleteBtn: boolean;}) {
+export default function CodeItem({
+  data,
+  deleteBtn,
+}: {
+  data: codeType;
+  deleteBtn: boolean;
+}) {
+  const [deleteCode, { isLoading }] = useDeleteCodeMutation();
 
-const [deleteCode, {isLoading}] = useDeleteCodeMutation();
+  const handleDelete = async () => {
+    try {
+      const response = await deleteCode(data._id!).unwrap();
+      console.log(response);
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
-const handleDelete = async () => {
-  try {
-    const response = await deleteCode(data._id!).unwrap();
-    console.log(response);
-  } catch (error) {
-    handleError(error);
-  }
-};
-
-return (
+  return (
     <div className="p-3 rounded cursor-pointer bg-slate-900 flex justify-start items-center flex-col gap-3">
       <div className="__top flex justify-center items-center gap-3 w-full">
         <Code />
@@ -37,6 +42,7 @@ return (
         <Link target="_blank" to={`/compiler/${data._id}`}>
           <Button variant="secondary">Open Code</Button>
         </Link>
+        {deleteBtn && (
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="destructive" loading={false}>
@@ -51,7 +57,7 @@ return (
                 </DialogTitle>
                 <div className="__url flex justify-center items-center text-center flex-col gap-1">
                   <p className="pb-2">
-                  Deleting this code is permanent. Proceed with caution.
+                    Deleting this code is permanent. Proceed with caution.
                   </p>
                   <Button
                     variant="destructive"
@@ -65,6 +71,7 @@ return (
               </DialogHeader>
             </DialogContent>
           </Dialog>
+        )}
       </div>
     </div>
   );
