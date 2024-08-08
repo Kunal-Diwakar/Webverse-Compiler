@@ -37,4 +37,4 @@ const appSlice = createSlice({
 });
 
 export default appSlice.reducer;
-export const { updateCurrentUser, updateIsLoggedIn,setCurrentWidth } = appSlice.actions;
+export const { updateCurrentUser, updateIsLoggedIn, setCurrentWidth } = appSlice.actions;

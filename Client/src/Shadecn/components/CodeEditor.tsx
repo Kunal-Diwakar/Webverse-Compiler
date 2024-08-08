@@ -17,8 +17,6 @@ export default function CodeEditor() {
   const Dispatch = useDispatch();
 
   const onChange = React.useCallback((value: string) => {
-    // console.log("val:", val);
-    // setValue(val);
     Dispatch(updateCodeValue(value));
   }, []);
 
@@ -26,6 +24,7 @@ export default function CodeEditor() {
     <ReactCodeMirror
       value={fullcode[currentLanguage]}
       height="calc(100vh - 60px - 50px)"
+      className="code-editor [&>.cm-editor]:!text-[10px] md:[&>.cm-editor]:!text-xs"
       extensions={[loadLanguage(currentLanguage)!]}
       onChange={onChange}
       theme={draculaInit({
