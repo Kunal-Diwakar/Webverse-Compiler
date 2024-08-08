@@ -4,8 +4,7 @@ import { codeType, loginCredentialsType, signupCredentialsType, userInfoType } f
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    // updateD Line
-    baseUrl: "https://maddening-hungry-pie.glitch.me", 
+    baseUrl: "http://localhost:4000",
     credentials: "include",
   }),
   tagTypes: ["myCodes", "allCodes"],
