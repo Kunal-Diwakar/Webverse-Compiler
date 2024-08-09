@@ -4,7 +4,7 @@ import { codeType, loginCredentialsType, signupCredentialsType, userInfoType } f
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://mesquite-recondite-board.glitch.me",
+    baseUrl: "http://localhost:4000",
     credentials: "include",
   }),
   tagTypes: ["myCodes", "allCodes"],
