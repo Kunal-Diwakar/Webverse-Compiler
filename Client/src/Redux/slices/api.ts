@@ -95,16 +95,17 @@ export const api = createApi({
       query: () => ({
         url: "/compiler/get-all-codes",
         cache: "no-store",
+        method: "GET"
       }),
       providesTags: ["allCodes"],
     }),
 
     getUserDetails: builder.query<userInfoType, void>({
-      query: () => ({ url: "/user/user-details", cache: "no-store" }),
+      query: () => ({ url: "/user/user-details", cache: "no-store", method: "GET" }),
     }),
 
     getMyCodes: builder.query<Array<codeType>, void>({
-      query: () => "/user/my-codes",
+      query: () => ({ url:"/user/my-codes", method: "GET"}),
       providesTags: ["myCodes"],
     }),
   }),
