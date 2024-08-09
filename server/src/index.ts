@@ -1,6 +1,7 @@
+import { config } from "dotenv";
+config();
 import express from "express";
 import cors from "cors";
-import { config } from "dotenv";
 import { dbConnect } from "./lib/dbConnect";
 import { userRouter } from "./routes/userRoutes";
 import { compilerRouter } from "./routes/compilerRoutes";
@@ -16,7 +17,6 @@ app.use(
     origin: ["http://localhost:5173", process.env.CLIENT_URL!],
   })
 );
-config();
 
 app.use("/compiler", compilerRouter);
 app.use("/user", userRouter);

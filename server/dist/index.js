@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const dotenv_1 = require("dotenv");
 const dbConnect_1 = require("./lib/dbConnect");
 const userRoutes_1 = require("./routes/userRoutes");
 const compilerRoutes_1 = require("./routes/compilerRoutes");
@@ -18,7 +19,6 @@ app.use((0, cors_1.default)({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     origin: ["http://localhost:5173", process.env.CLIENT_URL],
 }));
-(0, dotenv_1.config)();
 app.use("/compiler", compilerRoutes_1.compilerRouter);
 app.use("/user", userRoutes_1.userRouter);
 (0, dbConnect_1.dbConnect)();
