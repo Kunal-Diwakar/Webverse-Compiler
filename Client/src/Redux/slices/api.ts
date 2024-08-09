@@ -4,7 +4,7 @@ import { codeType, loginCredentialsType, signupCredentialsType, userInfoType } f
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://webverse-compiler-backend.onrender.com",
+    baseUrl: "http://localhost:4000",
     credentials: "include",
   }),
   tagTypes: ["myCodes", "allCodes"],
