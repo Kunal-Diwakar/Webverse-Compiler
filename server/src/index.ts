@@ -22,6 +22,8 @@ app.use("/compiler", compilerRouter);
 app.use("/user", userRouter);
 
 dbConnect();
-app.listen(4000, () => {
-  console.log("http://localhost:4000");
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
+
