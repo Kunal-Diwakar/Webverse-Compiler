@@ -20,7 +20,7 @@ export const api = createApi({
           body: fullCode,
         };
       },
-      invalidatesTags: ["myCodes"],
+      invalidatesTags: ["myCodes", "allCodes"],
     }),
 
     loadcode: builder.mutation<
