@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CompilerSliceStateType } from "./CompilerSlice";
-import { codeType, loginCredentialsType, signupCredentialsType, userInfoType } from "@/vite-env";
+import {
+  codeType,
+  loginCredentialsType,
+  signupCredentialsType,
+  userInfoType,
+} from "@/vite-env";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -9,10 +14,7 @@ export const api = createApi({
   }),
   tagTypes: ["myCodes", "allCodes"],
   endpoints: (builder) => ({
-    saveCode: builder.mutation<
-      { url: string; status: string },
-      codeType
-    >({
+    saveCode: builder.mutation<{ url: string; status: string }, codeType>({
       query: (fullCode) => {
         return {
           url: "/compiler/save",
@@ -98,17 +100,12 @@ export const api = createApi({
     }),
 
     getUserDetails: builder.query<userInfoType, void>({
-      query: () => {
-        return {
-          url: "/user/user-details",
-          cache: "no-store"
-        };
-      },
+      query: () => ({ url: "/user/user-details", cache: "no-store" }),
     }),
 
     getMyCodes: builder.query<Array<codeType>, void>({
       query: () => "/user/my-codes",
-      providesTags: ["myCodes"]
+      providesTags: ["myCodes"],
     }),
   }),
 });
@@ -123,5 +120,5 @@ export const {
   useGetMyCodesQuery,
   useDeleteCodeMutation,
   useEditCodeMutation,
-  useGetAllCodesQuery
+  useGetAllCodesQuery,
 } = api;
