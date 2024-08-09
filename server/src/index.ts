@@ -6,10 +6,13 @@ import { dbConnect } from "./lib/dbConnect";
 import { userRouter } from "./routes/userRoutes";
 import { compilerRouter } from "./routes/compilerRoutes";
 import cookieParser from "cookie-parser"
+import { verifyToken } from "./middlewares/verifyToken";
 const app = express();
-
+app.use(verifyToken);
 app.use(express.json());
 app.use(cookieParser());
+app.use("/compiler", compilerRouter);
+app.use("/user", userRouter);
 app.use(
   cors({
     credentials: true,
@@ -18,8 +21,6 @@ app.use(
   })
 );
 
-app.use("/compiler", compilerRouter);
-app.use("/user", userRouter);
 
 dbConnect();
 const PORT = process.env.PORT || 4000;
